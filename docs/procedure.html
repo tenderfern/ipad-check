@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="tf-version" content="2026-10-03.1">
+  <meta name="theme-color" content="#f4f0e6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="iPad check">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="app.webmanifest?v=2026-10-03.1">
+  <link rel="stylesheet" href="style.css?v=2026-10-03.1">
+  <title>tenderfern iPad check — procedure</title>
+</head>
+<body>
+  <header class="site">
+    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-03.1</span></p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="procedure.html" aria-current="page">Procedure</a>
+      <a href="player.html">Player</a>
+      <a href="storage.html">Storage</a>
+      <a href="results.html">Results</a>
+      <a href="har.html">Hosts</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Procedure</h1>
+    <p>Run these in order. Write what you see on the <a href="results.html">results</a> page, and keep the player log with that export (Copy, Share, or Download). If it is not on the screen, it is not in the result.</p>
+    <p class="note">The allowlist entry for this site is exactly <code>tenderfern.github.io</code>. Never list <code>github.io</code>. Listing <code>github.io</code> would allow every site published on GitHub Pages. The pages are at <a href="https://tenderfern.github.io/ipad-check/">https://tenderfern.github.io/ipad-check/</a>.</p>
+
+    <h2>Before you start</h2>
+    <ul class="checklist">
+      <li>On the home page, type the iPadOS version from the Settings page that lists the software version. iPadOS Safari reports a Mac user agent by default, so the user agent is not that version.</li>
+      <li>Note whether the video app is installed.</li>
+      <li>On a desktop browser, capture a HAR while each test video plays in each mode. The <a href="har.html">hosts</a> page says how, and it turns the file into a host list. Do not commit the HAR. A HAR can hold cookies and headers. Commit the host list, inside the results note.</li>
+    </ul>
+
+    <h2>A — Baseline, no restrictions</h2>
+    <p>Use the setting that does not limit which websites can open. If a limit is already on, turn off the control that blocks every website except the ones you list.</p>
+    <p>For every video in the set, in every mode, with the guard off and then with the guard on, record what plays, what fails, and which error the log names.</p>
+    <ul class="checklist">
+      <li>The made-for-kids video and the long monetized video are the ones that should play while the network is open.</li>
+      <li>The embedding-disabled id should fail. Expect error 101 or 150.</li>
+      <li>The missing id should fail. The player API reference names error 100 when a video is not found. A desktop API load of the id in this set logged 150, and the frame said Video unavailable. Write down the code the iPad log shows.</li>
+      <li>The age-restricted video should refuse or send you away.</li>
+    </ul>
+    <p>Then, with the guard off, on the creator video (set the start near the end if you want to get there quickly):</p>
+    <ol class="checklist">
+      <li>Question 4. What the player shows in its last seconds and after the video ends. What a tap on those elements does. Whether a tap loads another video in the same player, and whether the log shows that in time. What changes in fullscreen. Use the player's own fullscreen control.</li>
+      <li>Question 5. Where a tap on the title, the channel, the logo, and any Watch on YouTube link goes: a new tab, the page shown for a website that is not allowed, or the video app if it is installed.</li>
+      <li>Question 6. Which events, states, and errors the log shows, for each case and each mode.</li>
+    </ol>
+    <p>The guard removes the player when the video ends or the id in the player changes. Leave it off while you are looking at the end of a video, or at an ad.</p>
+
+    <h2>B — Allowlist</h2>
+    <p>Turn on the Screen Time control that allows only websites you list and blocks every other website. Its label changes between iPadOS versions. Use the control that does that, not a control that only hides adult sites and still opens everything else.</p>
+    <p>Start the list with <code>tenderfern.github.io</code> alone. Open this site and try every mode. Record what fails.</p>
+    <p>Then add hosts one at a time. After each addition, try every mode and record what plays and what fails. Use this order:</p>
+    <ol class="checklist">
+      <li><code>www.youtube-nocookie.com</code></li>
+      <li><code>i.ytimg.com</code></li>
+      <li><code>googlevideo.com</code> — a host ending in <code>googlevideo.com</code> counts. Write the exact host the player asked for.</li>
+      <li>The rest of the HAR list, one at a time, except <code>www.youtube.com</code>.</li>
+      <li><code>www.youtube.com</code> last, and only to learn what it changes. Listing it would open the video site itself.</li>
+    </ol>
+    <p>The result is the smallest list on which each mode plays. That answers questions 1 and 2. Question 2 is whether the API script loads, and whether any mode plays, before <code>www.youtube.com</code> is added. The script is requested from <code>www.youtube.com</code>. The plain iframe does not request it.</p>
+
+    <h2>C — Ads</h2>
+    <p>On the smallest list that plays the monetized video, play that video several times with the guard off. Record whether ads play. Take the ad hosts from a desktop HAR captured while that video plays, not by blocking anything.</p>
+    <p>If those hosts are on the allowlist, remove them and play again. Record whether playback survives. That answers question 3. The pages do not block ads.</p>
+
+    <h2>D — Pairing</h2>
+    <p>Open the <a href="storage.html">storage</a> page in a Safari tab and write a token. Then use the share-sheet action that adds the current page to the Home Screen as its own icon, and open the page from that icon. A tab and a home-screen web app do not share storage, so write down whether the tab's token is absent there, and write a token in the web app too.</p>
+    <p>Revisit both after about one day, three days, and eight days. Safari can delete a site's script-written storage after seven days without a visit. Record which copies are still there and how old they are. That answers question 7.</p>
+    <p>The storage page cannot set an HttpOnly cookie. GitHub Pages has no server that can set one. A token that survives here is a lower bound: the product's own server could use an HttpOnly cookie.</p>
+
+    <h2>What to save</h2>
+    <p>On the results page, export Markdown with the log attached. Save the file in this repository as <code>results/&lt;date&gt;-&lt;device&gt;.md</code>, for example <code>results/2026-10-03-ipad.md</code>.</p>
+  </main>
+  <section id="log-panel" class="panel"></section>
+  <script src="config.js?v=2026-10-03.1"></script>
+  <script src="log.js?v=2026-10-03.1"></script>
+</body>
+</html>

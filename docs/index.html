@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="tf-version" content="2026-10-03.1">
+  <meta name="theme-color" content="#f4f0e6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="iPad check">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="app.webmanifest?v=2026-10-03.1">
+  <link rel="stylesheet" href="style.css?v=2026-10-03.1">
+  <title>tenderfern iPad check</title>
+</head>
+<body>
+  <header class="site">
+    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-03.1</span></p>
+    <nav>
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="procedure.html">Procedure</a>
+      <a href="player.html">Player</a>
+      <a href="storage.html">Storage</a>
+      <a href="results.html">Results</a>
+      <a href="har.html">Hosts</a>
+    </nav>
+  </header>
+  <main>
+    <h1>tenderfern iPad check</h1>
+    <p class="lede">Test pages for an embedded player on an iPad whose Screen Time allows only listed websites. What a test learns is written on the screen, because this iPad has no desktop inspector attached.</p>
+    <p>The pages are published at <a href="https://tenderfern.github.io/ipad-check/">https://tenderfern.github.io/ipad-check/</a>. The allowlist entry for the site is exactly <code>tenderfern.github.io</code>. Never <code>github.io</code>: that entry would allow every site published on GitHub Pages.</p>
+    <p>Nothing here is the child app. The pages hold nothing about a child, store no copy of a video, and load nothing from any host but this site until the player page is asked to load a mode.</p>
+    <h2>Pages</h2>
+    <ul class="page-list">
+      <li><a href="procedure.html">Procedure</a> — the run order, and what to record at each step.</li>
+      <li><a href="player.html">Player</a> — three embed modes, the video set, and a log of every event.</li>
+      <li><a href="storage.html">Storage</a> — whether a token survives in a Safari tab and in a home-screen web app.</li>
+      <li><a href="results.html">Results</a> — the form for each run and question, kept on this device, exported as Markdown.</li>
+      <li><a href="har.html">Hosts</a> — a desktop page that reads a HAR file locally and lists hosts. Nothing is uploaded.</li>
+    </ul>
+    <h2>This device</h2>
+    <dl class="env-grid">
+      <dt>Context</dt>
+      <dd id="env-context"></dd>
+      <dt>navigator.standalone</dt>
+      <dd id="env-standalone"></dd>
+      <dt>display-mode: standalone</dt>
+      <dd id="env-displayMode"></dd>
+      <dt>maxTouchPoints</dt>
+      <dd id="env-touch"></dd>
+      <dt>Viewport</dt>
+      <dd id="env-viewport"></dd>
+      <dt>Time</dt>
+      <dd id="env-time"></dd>
+      <dt>Address</dt>
+      <dd id="env-href"></dd>
+      <dt>User agent</dt>
+      <dd id="env-ua"></dd>
+    </dl>
+    <p class="note">iPadOS Safari reports a Mac user agent by default. The string above is not the iPadOS version. Type the version shown on the Settings page that lists the software version.</p>
+    <label class="field">
+      <span class="field-label">iPadOS version</span>
+      <input id="ipados" type="text" autocomplete="off" placeholder="for example 18.6">
+    </label>
+    <div class="actions">
+      <button type="button" id="refresh-env" class="secondary">Refresh</button>
+      <button type="button" id="log-env">Add this environment to the log</button>
+    </div>
+    <h2>Video set</h2>
+    <p>Checked on 2026-10-03 from oEmbed and the watch page. No Data API. Where a fact was not on those pages, the note says so.</p>
+    <div id="video-set"></div>
+    <noscript><p class="caution">This page needs JavaScript to fill the environment and the video set.</p></noscript>
+  </main>
+  <section id="log-panel" class="panel"></section>
+  <script src="config.js?v=2026-10-03.1"></script>
+  <script src="log.js?v=2026-10-03.1"></script>
+  <script src="home.js?v=2026-10-03.1"></script>
+</body>
+</html>

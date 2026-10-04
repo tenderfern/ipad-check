@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="tf-version" content="2026-10-03.1">
+  <meta name="theme-color" content="#f4f0e6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="iPad check">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="app.webmanifest?v=2026-10-03.1">
+  <link rel="stylesheet" href="style.css?v=2026-10-03.1">
+  <title>tenderfern iPad check — hosts</title>
+</head>
+<body class="wide">
+  <header class="site">
+    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-03.1</span></p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="procedure.html">Procedure</a>
+      <a href="player.html">Player</a>
+      <a href="storage.html">Storage</a>
+      <a href="results.html">Results</a>
+      <a href="har.html" aria-current="page">Hosts</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Hosts</h1>
+    <p>For a desktop browser. Choose a HAR file. This page lists each host with its request count and resource types. The file is read here and is not uploaded.</p>
+    <p class="note">A HAR can hold cookies and headers. Do not commit it. Copy the host list into the results note, and keep the file off the repository.</p>
+    <h2>Getting a HAR</h2>
+    <ol class="checklist">
+      <li>In the desktop browser, open developer tools, then Network.</li>
+      <li>Turn on Preserve log and Disable cache.</li>
+      <li>On the published site, play each test video in each mode.</li>
+      <li>Export HAR (sanitized).</li>
+    </ol>
+    <p>That list is a starting point for question 1, the domains the allowlist needs. The run itself is on the iPad: add hosts one at a time, as the procedure says.</p>
+    <div class="actions">
+      <label class="field">
+        <span class="field-label">HAR file</span>
+        <input id="har-file" type="file" accept=".har,.json,application/json">
+      </label>
+    </div>
+    <div class="actions">
+      <button type="button" id="har-sample" class="secondary">Load the sample file</button>
+      <button type="button" id="har-copy">Copy host list</button>
+    </div>
+    <p class="muted">The sample, <code>har-sample.json</code>, is made up. Its headers are not a real capture, and it has no real cookie. It is only for checking this page.</p>
+    <div id="har-report"></div>
+    <noscript><p class="caution">This page needs JavaScript. The file would not be uploaded either way.</p></noscript>
+  </main>
+  <section id="log-panel" class="panel"></section>
+  <script src="config.js?v=2026-10-03.1"></script>
+  <script src="log.js?v=2026-10-03.1"></script>
+  <script src="har.js?v=2026-10-03.1"></script>
+</body>
+</html>

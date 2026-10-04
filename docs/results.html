@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="tf-version" content="2026-10-03.1">
+  <meta name="theme-color" content="#f4f0e6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="iPad check">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="app.webmanifest?v=2026-10-03.1">
+  <link rel="stylesheet" href="style.css?v=2026-10-03.1">
+  <title>tenderfern iPad check — results</title>
+</head>
+<body class="wide">
+  <header class="site">
+    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-03.1</span></p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="procedure.html">Procedure</a>
+      <a href="player.html">Player</a>
+      <a href="storage.html">Storage</a>
+      <a href="results.html" aria-current="page">Results</a>
+      <a href="har.html">Hosts</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Results</h1>
+    <p>One field for each run and each question. Drafts stay in localStorage on this device, in this context: a Safari tab and a home-screen web app do not share the draft. Export Markdown with the log attached, and save that file in the repository as <code>results/&lt;date&gt;-&lt;device&gt;.md</code>.</p>
+    <div id="results-form"></div>
+    <div class="actions">
+      <button type="button" id="save-draft">Save draft</button>
+      <button type="button" id="attach-log" class="secondary">Attach the current log</button>
+      <button type="button" id="export-copy">Copy Markdown</button>
+      <button type="button" id="export-download">Download Markdown</button>
+      <button type="button" id="clear-draft" class="secondary">Clear draft</button>
+    </div>
+    <p id="export-path" class="filename"></p>
+    <p id="save-status" class="log-status" role="status"></p>
+    <noscript><p class="caution">This page needs JavaScript to keep the draft and export it.</p></noscript>
+  </main>
+  <section id="log-panel" class="panel"></section>
+  <script src="config.js?v=2026-10-03.1"></script>
+  <script src="log.js?v=2026-10-03.1"></script>
+  <script src="results.js?v=2026-10-03.1"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="tf-version" content="2026-10-03.1">
+  <meta name="theme-color" content="#f4f0e6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="iPad check">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="app.webmanifest?v=2026-10-03.1">
+  <link rel="stylesheet" href="style.css?v=2026-10-03.1">
+  <title>tenderfern iPad check — player</title>
+</head>
+<body class="wide">
+  <header class="site">
+    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-03.1</span></p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="procedure.html">Procedure</a>
+      <a href="player.html" aria-current="page">Player</a>
+      <a href="storage.html">Storage</a>
+      <a href="results.html">Results</a>
+      <a href="har.html">Hosts</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Player</h1>
+    <p>Three embed modes. The player is at least 200 × 200 px. Playback starts from a tap: Load does not play, and autoplay is not set. Nothing is drawn over the player. This page does not block ads and does not keep a copy of the video.</p>
+    <fieldset id="modes">
+      <legend>Mode</legend>
+    </fieldset>
+    <fieldset id="videos">
+      <legend>Video</legend>
+    </fieldset>
+    <div id="video-detail"></div>
+    <fieldset>
+      <legend>Options</legend>
+      <div class="inline">
+        <label class="field">
+          <span class="field-label">Start at seconds</span>
+          <input id="start" type="number" min="0" step="1" inputmode="numeric">
+        </label>
+        <div id="start-hint"></div>
+      </div>
+      <p class="muted">Applies on the next load. Empty means the beginning. API modes call seekTo. Plain mode sends start.</p>
+      <label class="choice">
+        <input id="rel" type="checkbox" checked>
+        <span>Send rel=0. What the end of the video shows is the thing to record. Applies on the next load.</span>
+      </label>
+      <label class="choice">
+        <input id="guard" type="checkbox">
+        <span>Guard. In the API modes, about twice a second, if getVideoUrl() is a different video or the state is ended (0), the page logs that. With the guard on, it then stops the player, removes it, and shows this page's own panel in its place. With the guard off, it only logs, so the embed's own end screen stays visible. The guard does not run for the plain iframe. Leave it off to watch an ending or an ad: an ad may use a different id.</span>
+      </label>
+    </fieldset>
+    <div class="actions">
+      <button type="button" id="load-player">Load</button>
+      <button type="button" id="page-play" disabled>Play</button>
+      <button type="button" id="remove-player" class="secondary">Remove player</button>
+    </div>
+    <p class="muted">Play calls playVideo() and is only for the API modes. In plain mode, tap the play control inside the player. This page does not send the player a message. The frame is allowed to go fullscreen from its own control.</p>
+    <div id="player-slot" class="player-slot"></div>
+    <ul class="status-list">
+      <li>API script: <span id="script-status">not requested</span></li>
+      <li>Player frame: <span id="frame-status">none</span></li>
+      <li>Last poll: <span id="poll-status">not polling</span></li>
+    </ul>
+    <h2>What to watch</h2>
+    <ol class="checklist">
+      <li>With the guard off: the last seconds, the screen after the video ends, and the same thing in fullscreen.</li>
+      <li>A tap on an end-screen element. Does another video load in this player, and does the log say so.</li>
+      <li>Taps on the title, the channel, the logo, and any Watch on YouTube link. Note whether each opens a new tab, a restricted page, or the video app.</li>
+      <li>Add a note to the log for each tap. Events, states, and errors are already logged, with codes 2, 5, 100, 101, 150 and 153 named.</li>
+    </ol>
+    <noscript><p class="caution">This page needs JavaScript. The player is not loaded.</p></noscript>
+  </main>
+  <section id="log-panel" class="panel"></section>
+  <script src="config.js?v=2026-10-03.1"></script>
+  <script src="log.js?v=2026-10-03.1"></script>
+  <script src="player.js?v=2026-10-03.1"></script>
+</body>
+</html>

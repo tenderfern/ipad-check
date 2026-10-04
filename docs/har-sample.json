@@ -1,0 +1,113 @@
+{
+  "log": {
+    "version": "1.2",
+    "creator": { "name": "ipad-check-sample", "version": "2026-10-03.1" },
+    "entries": [
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://tenderfern.github.io/ipad-check/player.html",
+          "headers": [
+            { "name": "User-Agent", "value": "ipad-check-sample" },
+            { "name": "Cookie", "value": "sample=not-a-real-cookie" }
+          ]
+        },
+        "response": { "status": 200, "content": { "mimeType": "text/html", "size": 100 } },
+        "_resourceType": "document"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://www.youtube.com/iframe_api",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "text/javascript", "size": 20 } },
+        "_resourceType": "script"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://www.youtube.com/s/player/sample/www-widgetapi.vflset/www-widgetapi.js",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "text/javascript", "size": 20 } },
+        "_resourceType": "script"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://www.youtube-nocookie.com/embed/00000000000?playsinline=1",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "text/html", "size": 20 } },
+        "_resourceType": "document"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://i.ytimg.com/vi/00000000000/hqdefault.jpg",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "image/jpeg", "size": 20 } },
+        "_resourceType": "image"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://i.ytimg.com/vi/00000000000/mqdefault.jpg",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "image/jpeg", "size": 20 } },
+        "_resourceType": "image"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://rr1---sn-example.googlevideo.com/videoplayback?id=sample",
+          "headers": [
+            { "name": "User-Agent", "value": "ipad-check-sample" },
+            { "name": "Cookie", "value": "sample=not-a-real-cookie" }
+          ]
+        },
+        "response": { "status": 200, "content": { "mimeType": "video/mp4", "size": 20 } },
+        "_resourceType": "media"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://rr1---sn-example.googlevideo.com/videoplayback?id=sample-2",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "video/mp4", "size": 20 } },
+        "_resourceType": "media"
+      },
+      {
+        "request": {
+          "method": "POST",
+          "url": "https://jnn-pa.googleapis.com/sample",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "application/json", "size": 8 } },
+        "_resourceType": "xhr"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://static.doubleclick.net/instream/sample.js",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "text/javascript", "size": 8 } },
+        "_resourceType": "script"
+      },
+      {
+        "request": {
+          "method": "GET",
+          "url": "https://googleads.g.doubleclick.net/pagead/sample",
+          "headers": [{ "name": "User-Agent", "value": "ipad-check-sample" }]
+        },
+        "response": { "status": 200, "content": { "mimeType": "text/html", "size": 8 } },
+        "_resourceType": "document"
+      }
+    ]
+  }
+}

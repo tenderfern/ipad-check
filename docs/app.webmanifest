@@ -1,0 +1,10 @@
+{
+  "name": "tenderfern iPad check",
+  "short_name": "iPad check",
+  "description": "Test pages for an embedded player under a website allowlist.",
+  "start_url": "storage.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f0e6",
+  "theme_color": "#f4f0e6"
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="tf-version" content="2026-10-03.1">
+  <meta name="theme-color" content="#f4f0e6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="iPad check">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="app.webmanifest?v=2026-10-03.1">
+  <link rel="stylesheet" href="style.css?v=2026-10-03.1">
+  <title>tenderfern iPad check — storage</title>
+</head>
+<body>
+  <header class="site">
+    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-03.1</span></p>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="procedure.html">Procedure</a>
+      <a href="player.html">Player</a>
+      <a href="storage.html" aria-current="page">Storage</a>
+      <a href="results.html">Results</a>
+      <a href="har.html">Hosts</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Storage</h1>
+    <p>A token and the time it was written, in localStorage, IndexedDB, and a cookie this page sets itself. The cookie asks to live 400 days. Safari may ignore that.</p>
+    <p>All three copies are written by script. Safari can delete a site's script-written storage after seven days without a visit. Come back after about one day, three days, and eight days, and read which copies are still here and how old they are.</p>
+    <p class="note">GitHub Pages cannot set a cookie from the server, so this result is a lower bound. The product's own server could use an HttpOnly cookie, which this page cannot set and would not be able to read.</p>
+    <p>A Safari tab and a home-screen web app keep separate storage. This page says which one it is open in. To try the web app: while this page is open, use the share-sheet action that adds the current page to the Home Screen, then open it from that icon. The manifest and the apple-mobile-web-app-capable tag are what let it run standalone.</p>
+    <p id="storage-context"></p>
+    <div class="actions">
+      <button type="button" id="write-token">Write a new token</button>
+    </div>
+    <div id="storage-report"></div>
+    <noscript><p class="caution">This page needs JavaScript to write and read the token.</p></noscript>
+  </main>
+  <section id="log-panel" class="panel"></section>
+  <script src="config.js?v=2026-10-03.1"></script>
+  <script src="log.js?v=2026-10-03.1"></script>
+  <script src="storage.js?v=2026-10-03.1"></script>
+</body>
+</html>
