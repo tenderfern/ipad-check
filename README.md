@@ -1,8 +1,8 @@
 # tenderfern iPad check
 
-Static pages for finding out what an embedded player does on an iPad when Screen Time allows only listed websites. There is no build step and no dependency. The pages load nothing from any host but this site and the embed hosts the player page asks for.
+Static pages for finding out what an embedded player does on an iPad when Screen Time allows only listed websites. There is no build step and no dependency. The pages load nothing from any host but this site and the embed hosts the player page asks for. An account selector on every page records the kind of account only, and every log line carries that kind together with whether the page is a browser tab or a home-screen web app.
 
-Version **2026-10-03.1**. The same string is in `docs/config.js`, in each page header, and on the CSS and JavaScript links, so a published update is not served from cache.
+Version **2026-10-04.1**. The same string is in `docs/config.js`, in each page header, and on the CSS and JavaScript links, so a published update is not served from cache.
 
 The published site is [https://tenderfern.github.io/ipad-check/](https://tenderfern.github.io/ipad-check/). The allowlist entry for it is exactly `tenderfern.github.io`, never `github.io`.
 
@@ -23,8 +23,8 @@ These files are in `docs/`.
 | Page | What it is for |
 |---|---|
 | `index.html` | What this is, links, and what the device reports (touch, standalone, viewport, user agent, time). iPadOS Safari reports a Mac user agent, so the iPadOS version is typed here. |
-| `procedure.html` | The run order: baseline, allowlist, ads, pairing. Screen Time controls are named by what they do. |
-| `player.html` | Three embed modes, the video set, a start time, `rel=0`, and the guard. Every API event, script load, guard poll, and plain-mode message is logged on screen. |
+| `procedure.html` | The run order: baseline, allowlist, ads, pairing, and sign-in. Screen Time controls are named by what they do. |
+| `player.html` | Three embed modes, the video set, a start time, `rel=0`, and the guard. Every API event, script load, guard poll, and plain-mode message is logged on screen. Sign-in prompt seen marks a sign-in or bot-check message. |
 | `storage.html` | A token in localStorage, IndexedDB, and a script-written cookie, plus `persist()` and `persisted()`. A Safari tab and a home-screen web app keep separate storage. |
 | `results.html` | A field for each run and each question. Drafts stay in localStorage. Export Markdown, with the log attached, and save it as `results/<date>-<device>.md`. |
 | `har.html` | Desktop only. Reads a HAR file in the page and lists hosts. Nothing is uploaded. |

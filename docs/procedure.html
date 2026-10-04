@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="tf-version" content="2026-10-03.1">
+  <meta name="tf-version" content="2026-10-04.1">
   <meta name="theme-color" content="#f4f0e6">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="iPad check">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="manifest" href="app.webmanifest?v=2026-10-03.1">
-  <link rel="stylesheet" href="style.css?v=2026-10-03.1">
+  <link rel="manifest" href="app.webmanifest?v=2026-10-04.1">
+  <link rel="stylesheet" href="style.css?v=2026-10-04.1">
   <title>tenderfern iPad check — procedure</title>
 </head>
 <body>
   <header class="site">
-    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-03.1</span></p>
+    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-04.1</span></p>
     <nav>
       <a href="index.html">Home</a>
       <a href="procedure.html" aria-current="page">Procedure</a>
@@ -76,11 +76,23 @@
     <p>Revisit both after about one day, three days, and eight days. Safari can delete a site's script-written storage after seven days without a visit. Record which copies are still there and how old they are. That answers question 7.</p>
     <p>The storage page cannot set an HttpOnly cookie. GitHub Pages has no server that can set one. A token that survives here is a lower bound: the product's own server could use an HttpOnly cookie.</p>
 
+    <h2>E — Sign-in</h2>
+    <p>Set the account selector at the top of the page before a run. It records the kind of account: signed out, a parent's account, a child's supervised account, a teen's own account, or not sure. Every log line carries that kind, and whether the page is open in a Safari tab or as a home-screen web app. Leave out any name, address, or picture.</p>
+    <p>Skip a kind nobody in the household has, and write that on the results page. Do not create an account for the test.</p>
+    <ol class="checklist">
+      <li>Signed out. This is runs A to C. Set the selector to Signed out before those runs.</li>
+      <li>For each account the household has, sign in on youtube.com in a Safari tab. Then open the player page in Safari, and again from the Home Screen icon. Record whether the player shows the account, whether a bot check appears, and whether ads play. A tab and a home-screen web app keep separate cookies, so both are part of the run.</li>
+      <li>When the player asks for sign-in, follow its link. Do this first with no restrictions, then on run B's smallest allowlist. Add hosts until the sign-in finishes, and record each one, including whether <code>www.youtube.com</code> was needed. Record whether the player then plays. Open the player again the next day and record whether the sign-in lasted.</li>
+      <li>With a supervised child account, play a video its YouTube setting refuses. You choose the video. Record what the player shows and which error the page logs.</li>
+    </ol>
+    <p>On the player page, tap Sign-in prompt seen when the player shows a sign-in or bot-check message. In the API modes, a play tap that does not reach playing within the time named on that page leaves a candidate line in the log. The button is the record of what you saw.</p>
+    <p>The desktop bot check has its own block on the results page: browser, profile, extensions, network, which modes, and whether youtube.com itself played in the same browser. The profile is the browser's profile. Leave the account name out of it.</p>
+
     <h2>What to save</h2>
     <p>On the results page, export Markdown with the log attached. Save the file in this repository as <code>results/&lt;date&gt;-&lt;device&gt;.md</code>, for example <code>results/2026-10-03-ipad.md</code>.</p>
   </main>
   <section id="log-panel" class="panel"></section>
-  <script src="config.js?v=2026-10-03.1"></script>
-  <script src="log.js?v=2026-10-03.1"></script>
+  <script src="config.js?v=2026-10-04.1"></script>
+  <script src="log.js?v=2026-10-04.1"></script>
 </body>
 </html>

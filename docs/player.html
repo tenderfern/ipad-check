@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="tf-version" content="2026-10-03.1">
+  <meta name="tf-version" content="2026-10-04.1">
   <meta name="theme-color" content="#f4f0e6">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="iPad check">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <link rel="manifest" href="app.webmanifest?v=2026-10-03.1">
-  <link rel="stylesheet" href="style.css?v=2026-10-03.1">
+  <link rel="manifest" href="app.webmanifest?v=2026-10-04.1">
+  <link rel="stylesheet" href="style.css?v=2026-10-04.1">
   <title>tenderfern iPad check — player</title>
 </head>
 <body class="wide">
   <header class="site">
-    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-03.1</span></p>
+    <p class="brand"><a href="index.html">tenderfern iPad check</a> <span class="version">2026-10-04.1</span></p>
     <nav>
       <a href="index.html">Home</a>
       <a href="procedure.html">Procedure</a>
@@ -58,8 +58,10 @@
       <button type="button" id="load-player">Load</button>
       <button type="button" id="page-play" disabled>Play</button>
       <button type="button" id="remove-player" class="secondary">Remove player</button>
+      <button type="button" id="sign-in-seen" class="secondary">Sign-in prompt seen</button>
     </div>
     <p class="muted">Play calls playVideo() and is only for the API modes. In plain mode, tap the play control inside the player. This page does not send the player a message. The frame is allowed to go fullscreen from its own control.</p>
+    <p class="muted" id="sign-in-note"></p>
     <div id="player-slot" class="player-slot"></div>
     <ul class="status-list">
       <li>API script: <span id="script-status">not requested</span></li>
@@ -72,12 +74,13 @@
       <li>A tap on an end-screen element. Does another video load in this player, and does the log say so.</li>
       <li>Taps on the title, the channel, the logo, and any Watch on YouTube link. Note whether each opens a new tab, a restricted page, or the video app.</li>
       <li>Add a note to the log for each tap. Events, states, and errors are already logged, with codes 2, 5, 100, 101, 150 and 153 named.</li>
+      <li>When the player shows a sign-in or bot-check message, tap Sign-in prompt seen. Note where its link goes.</li>
     </ol>
     <noscript><p class="caution">This page needs JavaScript. The player is not loaded.</p></noscript>
   </main>
   <section id="log-panel" class="panel"></section>
-  <script src="config.js?v=2026-10-03.1"></script>
-  <script src="log.js?v=2026-10-03.1"></script>
-  <script src="player.js?v=2026-10-03.1"></script>
+  <script src="config.js?v=2026-10-04.1"></script>
+  <script src="log.js?v=2026-10-04.1"></script>
+  <script src="player.js?v=2026-10-04.1"></script>
 </body>
 </html>

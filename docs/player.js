@@ -11,6 +11,7 @@
   var foreignLoggedFor = "";
   var pagePlayTapped = false;
   var busy = false;
+  var signInTimer = null;
   var apiPromise = null;
 
   var loadButton = document.getElementById("load-player");
@@ -196,6 +197,7 @@
 
   function removeForGuard(reason) {
     if (removedByGuard) return;
+    clearSignInWait();
     removedByGuard = true;
     stopPolling();
     plainActive = false;
@@ -290,6 +292,7 @@
   function onStateChange(event) {
     var state = event.data;
     TFLog.push("onStateChange " + state + " (" + stateName(state) + ")");
+    if (state === 1) clearSignInWait();
     if (state === 1 && !pagePlayTapped) {
       TFLog.push("playback reported playing before the page play button was tapped");
     }
@@ -305,6 +308,7 @@
   }
 
   function onError(event) {
+    clearSignInWait();
     TFLog.push("onError " + event.data + " (" + errorName(event.data) + ")");
   }
 
@@ -458,11 +462,49 @@
     setText(pollStatus, "waiting for onReady");
   }
 
+  function clearSignInWait() {
+    if (signInTimer) {
+      window.clearTimeout(signInTimer);
+      signInTimer = null;
+    }
+  }
+
+  function armSignInWait() {
+    clearSignInWait();
+    if (modeKind !== "api") return;
+    var wait = TF_CONFIG.signInPromptWaitMs;
+    var mode = selectedMode();
+    var id = loadedId;
+    signInTimer = window.setTimeout(function () {
+      signInTimer = null;
+      TFLog.push(
+        "candidate sign-in prompt: no playing state within " +
+          wait / 1000 +
+          "s of the play tap — mode=" +
+          mode +
+          " id=" +
+          id
+      );
+    }, wait);
+  }
+
+  function onSignInSeen() {
+    TFLog.push(
+      "sign-in prompt seen — mode=" +
+        selectedMode() +
+        " id=" +
+        (loadedId || selectedId() || "(none)") +
+        " account=" +
+        TFAccount.label()
+    );
+  }
+
   function loadSelected() {
     if (busy) {
       TFLog.push("load ignored; a load is already in progress");
       return;
     }
+    clearSignInWait();
     var id = selectedId();
     var mode = selectedMode();
     var start = startSeconds();
@@ -522,6 +564,7 @@
   }
 
   function removeByHand() {
+    clearSignInWait();
     if (removedByGuard) {
       TFLog.push("remove ignored; the guard already removed the player");
       return;
@@ -547,6 +590,7 @@
     try {
       player.playVideo();
       TFLog.push("playVideo called");
+      armSignInWait();
     } catch (error) {
       TFLog.push("playVideo failed: " + (error && error.message ? error.message : error));
     }
@@ -698,8 +742,17 @@
   setText(pollStatus, "not polling");
 
   document.getElementById("videos").addEventListener("change", updateDetail);
+  var signInNote = document.getElementById("sign-in-note");
+  if (signInNote) {
+    signInNote.textContent =
+      "Tap Sign-in prompt seen when the player shows a sign-in or bot-check message. In the API modes, if Play does not reach playing within " +
+      TF_CONFIG.signInPromptWaitMs / 1000 +
+      " seconds, the log records a candidate signal. The button is the record of what you saw.";
+  }
+
   loadButton.addEventListener("click", loadSelected);
   playButton.addEventListener("click", onPagePlay);
+  document.getElementById("sign-in-seen").addEventListener("click", onSignInSeen);
   removeButton.addEventListener("click", removeByHand);
   guardInput.addEventListener("change", function () {
     TFLog.push("guard " + (guardOn() ? "on" : "off"));

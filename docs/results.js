@@ -45,7 +45,7 @@
     var input = field.type === "textarea" ? document.createElement("textarea") : document.createElement("input");
     if (field.type !== "textarea") input.type = field.type || "text";
     input.dataset.field = field.id;
-    input.dataset.label = field.label;
+    input.dataset.label = field.exportLabel || field.label;
     if (field.readonly) input.readOnly = true;
     label.appendChild(input);
     parent.appendChild(label);
@@ -113,6 +113,12 @@
     hint: "Yes, no, or not checked. Run A records this.",
   });
   addField(session, { id: "session.version", label: "Page version", type: "text", readonly: true });
+  addField(session, {
+    id: "session.account",
+    label: "Account state",
+    hint: "Taken from the selector at the top of the page. Kind only.",
+    readonly: true,
+  });
 
   var runA = addSection(
     "Run A — baseline, no restrictions",
@@ -204,7 +210,7 @@
 
   var questions = addSection(
     "Answers",
-    "These are the seven questions. The run notes above are the evidence; these boxes are the answer a later reader should not have to reconstruct."
+    "Questions 1 to 7. Question 8 is the sign-in section below. The run notes above are the evidence; these boxes are the answer a later reader should not have to reconstruct."
   );
   [
     ["q1", "1. Domains", "Which domains did each mode need? Which list was smallest?"],
@@ -222,7 +228,69 @@
     addField(questions, { id: field[0], label: field[1], type: "textarea", hint: field[2] });
   });
 
-  var attached = addSection("Attached log", "The export includes this text. It starts as the log stored on this device, in this context.");
+  var signIn = addSection(
+    "Question 8 — sign-in",
+    "One block for each account kind, in a Safari tab and in a home-screen web app. Skip a kind nobody in the household has, and write skipped. Do not create an account for the test. Record the kind only."
+  );
+  var contexts = [
+    ["tab", "Safari tab"],
+    ["home", "Home-screen web app"],
+  ];
+  var signInFields = [
+    ["bot", "Bot check", "Which mode, browser, network, and allowlist step it appeared at. Write none if it did not appear."],
+    ["link", "Where the sign-in link went", ""],
+    ["hosts", "Hosts the sign-in needed", "Each host added before the sign-in finished, including whether www.youtube.com was needed."],
+    ["played", "Did the player play afterwards?", ""],
+    ["nextday", "Did the sign-in last to the next day?", ""],
+  ];
+  TF_CONFIG.accountStates.forEach(function (state) {
+    var block = document.createElement("div");
+    var heading = document.createElement("h3");
+    heading.textContent = state.label;
+    block.appendChild(heading);
+    addField(block, {
+      id: "q8." + state.id + ".household",
+      label: "Household has this kind of account",
+      exportLabel: state.label + " — household has this kind of account",
+      hint: "yes, no, or skipped. Do not name the account.",
+    });
+    contexts.forEach(function (context) {
+      var place = document.createElement("h3");
+      place.textContent = context[1];
+      block.appendChild(place);
+      signInFields.forEach(function (field) {
+        addField(block, {
+          id: "q8." + state.id + "." + context[0] + "." + field[0],
+          label: field[1],
+          exportLabel: state.label + " — " + context[1] + " — " + field[1],
+          type: "textarea",
+          hint: field[2],
+        });
+      });
+    });
+    signIn.appendChild(block);
+  });
+  var desktop = document.createElement("div");
+  var desktopHeading = document.createElement("h3");
+  desktopHeading.textContent = "Desktop bot check";
+  desktop.appendChild(desktopHeading);
+  var desktopIntro = document.createElement("p");
+  desktopIntro.textContent =
+    "The check seen on a desktop browser. Name the browser, its profile, its extensions, and the network. The profile is the browser's profile. Leave any account name or address out.";
+  desktop.appendChild(desktopIntro);
+  [
+    ["q8.desktop.browser", "Browser"],
+    ["q8.desktop.profile", "Browser profile"],
+    ["q8.desktop.extensions", "Extensions"],
+    ["q8.desktop.network", "Network"],
+    ["q8.desktop.modes", "Which modes showed the bot check"],
+    ["q8.desktop.youtube", "Did youtube.com itself play in the same browser?"],
+  ].forEach(function (field) {
+    addField(desktop, { id: field[0], label: field[1], type: "textarea" });
+  });
+  signIn.appendChild(desktop);
+
+  var attached = addSection("Attached log", "The export includes this text. It starts as the log stored on this device, in this context. Each line carries the account kind and the context from when it was written.");
   addField(attached, { id: "log", label: "Log", type: "textarea" });
 
   function fields() {
@@ -263,6 +331,8 @@
     if (date && !date.value) date.value = today();
     var version = document.querySelector('[data-field="session.version"]');
     if (version) version.value = TF_CONFIG.version;
+    var account = document.querySelector('[data-field="session.account"]');
+    if (account) account.value = TFAccount.label();
     var ipados = document.querySelector('[data-field="session.ipados"]');
     if (ipados && !ipados.value) ipados.value = TFEnv.ipados();
     var log = document.querySelector('[data-field="log"]');
@@ -316,6 +386,8 @@
       "# tenderfern iPad check",
       "",
       "- version: " + TF_CONFIG.version,
+      "- account: " + TFAccount.label(),
+      "- context: " + TFEnv.contextLabel(),
       "- exported: " + new Date().toISOString(),
       "- path: " + path,
       "",
@@ -363,6 +435,12 @@
     saveDraft();
     saveStatus.textContent = "Attached the current log and saved the draft.";
   });
+  window.addEventListener("tf-account", function () {
+    var account = document.querySelector('[data-field="session.account"]');
+    if (account) account.value = TFAccount.label();
+    scheduleSave();
+  });
+
   document.getElementById("export-copy").addEventListener("click", function () {
     var body = buildMarkdown();
     if (navigator.clipboard && navigator.clipboard.writeText) {

@@ -36,10 +36,13 @@ var TFLog = (function () {
   }
 
   function formatLine(line) {
+    var account = line.account || "account not recorded";
+    var context = line.context || "context not recorded";
+    var body = "[" + account + " | " + context + "] " + line.message;
     if (line.count > 1) {
-      return line.stamp + "  " + line.message + "  (×" + line.count + ", last " + line.lastStamp + ")";
+      return line.stamp + "  " + body + "  (×" + line.count + ", last " + line.lastStamp + ")";
     }
-    return line.stamp + "  " + line.message;
+    return line.stamp + "  " + body;
   }
 
   function text() {
@@ -95,6 +98,8 @@ var TFLog = (function () {
       stamp: now,
       lastStamp: now,
       message: textMessage,
+      account: TFAccount.label(),
+      context: TFEnv.contextLabel(),
       collapseKey: collapseKey || "",
       count: 1,
     });
@@ -289,6 +294,91 @@ var TFLog = (function () {
   };
 })();
 
+var TFAccount = (function () {
+  "use strict";
+
+  var key = TF_CONFIG.storagePrefix + ":account";
+
+  function states() {
+    return TF_CONFIG.accountStates;
+  }
+
+  function known(value) {
+    for (var i = 0; i < states().length; i++) {
+      if (states()[i].id === value) return states()[i];
+    }
+    return null;
+  }
+
+  function id() {
+    var stored = "";
+    try {
+      stored = localStorage.getItem(key) || "";
+    } catch (error) {
+      stored = "";
+    }
+    return known(stored) ? stored : "unsure";
+  }
+
+  function label() {
+    var found = known(id());
+    return found ? found.label : "Not sure";
+  }
+
+  function set(next) {
+    if (!known(next)) return false;
+    try {
+      localStorage.setItem(key, next);
+    } catch (error) {
+      return false;
+    }
+    window.dispatchEvent(new CustomEvent("tf-account"));
+    return true;
+  }
+
+  function mount() {
+    var header = document.querySelector("header.site");
+    if (!header || document.getElementById("account-state")) return;
+    var bar = document.createElement("div");
+    bar.className = "account-bar";
+    var labelEl = document.createElement("label");
+    var name = document.createElement("span");
+    name.textContent = "Account";
+    var select = document.createElement("select");
+    select.id = "account-state";
+    states().forEach(function (state) {
+      var option = document.createElement("option");
+      option.value = state.id;
+      option.textContent = state.label;
+      select.appendChild(option);
+    });
+    select.value = id();
+    select.addEventListener("change", function () {
+      if (!set(select.value)) {
+        select.value = id();
+        TFLog.push("account state was not saved");
+        return;
+      }
+      TFLog.push("account state set to " + label());
+    });
+    labelEl.appendChild(name);
+    labelEl.appendChild(select);
+    var note = document.createElement("p");
+    note.className = "muted";
+    note.textContent = "Kind of account only. Leave out any name, address, or picture.";
+    bar.appendChild(labelEl);
+    bar.appendChild(note);
+    header.appendChild(bar);
+  }
+
+  return {
+    id: id,
+    label: label,
+    set: set,
+    mount: mount,
+  };
+})();
+
 var TFEnv = (function () {
   "use strict";
 
@@ -323,6 +413,7 @@ var TFEnv = (function () {
     var standalone = navigator.standalone;
     return [
       "version " + TF_CONFIG.version,
+      "account " + TFAccount.label(),
       "context " + contextLabel(),
       "navigator.standalone " + (standalone === undefined ? "undefined" : String(standalone)),
       "display-mode standalone " + String(standaloneMedia()),
@@ -345,5 +436,6 @@ var TFEnv = (function () {
   };
 })();
 
+TFAccount.mount();
 var logPanel = document.getElementById("log-panel");
 if (logPanel) TFLog.mount(logPanel);

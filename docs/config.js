@@ -1,7 +1,7 @@
 // Video set and version live here. Every page header, the version meta tag,
 // and the ?v= query on CSS and JS links must use the same version string.
 var TF_CONFIG = {
-  version: "2026-10-03.1",
+  version: "2026-10-04.1",
   storagePrefix: "tf-ipad-check",
   cookieName: "tf-ipad-check",
   idbName: "tf-ipad-check",
@@ -17,6 +17,14 @@ var TF_CONFIG = {
   guardIntervalMs: 500,
   cookieMaxAgeSeconds: 34560000,
   logMaxLines: 2000,
+  signInPromptWaitMs: 12000,
+  accountStates: [
+    { id: "signed-out", label: "Signed out" },
+    { id: "parent", label: "Parent's account" },
+    { id: "child-supervised", label: "Child's supervised account" },
+    { id: "teen", label: "Teen's own account" },
+    { id: "unsure", label: "Not sure" },
+  ],
   modes: [
     {
       id: "api-default",

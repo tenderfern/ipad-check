@@ -62,6 +62,35 @@ a:hover { text-decoration: none; }
 
 nav { display: flex; flex-wrap: wrap; gap: 8px 14px; }
 
+.account-bar {
+  flex: 1 0 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+}
+
+.account-bar label {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  font-weight: 650;
+}
+
+.account-bar select {
+  font: inherit;
+  min-height: 44px;
+  min-width: 16rem;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.account-bar p { margin: 0; }
+
 nav a { text-decoration: none; }
 
 main {
