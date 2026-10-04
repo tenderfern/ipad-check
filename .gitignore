@@ -1,0 +1,2 @@
+# Captured HAR files can hold cookies and headers. Commit the host list in results/*.md instead.
+*.har
